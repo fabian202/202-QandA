@@ -1,0 +1,60 @@
+﻿fieldset {
+        border: 1px solid #CCCCCC;
+    padding: 5px 5px 30px;
+        /*
+    min-height: 200px;
+    padding: 5px 5px 30px;
+    overflow: hidden;
+    width: 100%;*/
+}
+
+h2 {
+    text-align: center;
+}
+
+.help-block {
+    text-align: center;
+}
+
+.control-group  .control-container {    
+    text-align: center;
+}
+
+legend > span {
+     padding-left: 10px;
+}
+
+.field-container {
+    margin: 10px;
+    background-image: url(../images/blank.png);
+    padding: 10px;
+}
+
+body {
+    /*margin-top: 20px;*/
+    /*background-image: url(../images/bg-qa.png);*/
+}
+
+img.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-horizontal, #report_view {
+    background-image: url(../images/blank.png);
+}
+
+.brand {
+    padding: 3px 20px !important;
+}
+
+.navbar {
+    margin-bottom: 0 !important;
+}
+.timer {
+     font-size: 70px;
+    font-weight: bold;
+    height: 44px;
+    padding-top: 20px;
+}

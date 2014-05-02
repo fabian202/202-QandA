@@ -1,0 +1,34 @@
+﻿fieldset {
+        border: 1px solid #CCCCCC;
+    padding: 5px 5px 30px;
+        /*
+    min-height: 200px;
+    padding: 5px 5px 30px;
+    overflow: hidden;
+    width: 100%;*/
+}
+
+h2 {
+    text-align: center;
+}
+
+.help-block {
+    text-align: center;
+}
+
+.control-group  .control-container {    
+    text-align: center;
+}
+
+legend > span {
+     padding-left: 10px;
+}
+
+.field-container {
+    margin: 20px;
+}
+
+body {
+    margin: 20px;
+}
+

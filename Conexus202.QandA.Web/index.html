@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Cluster Energía Eléctrica</title>
+    <link href="assets/images/favicon.png" rel="shortcut icon">
+    <link href="assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+<body>
+    <div>
+        <div class="navbar ">
+            <div class="navbar-inner">
+                <a class="brand" href="#">
+                    <img src="assets/images/favicon.png" />
+                </a>
+                <ul class="nav">
+                    <li class="active">
+                        <a href="#" rel="participant_container">Inicio</a>
+                    </li>
+                    <li>
+                        <a href="#" rel="report_conainer">Reporte</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <img src="assets/images/logo.png" class="center" />
+        <img id="loader" src="assets/images/ajax-loader.gif" class="center" />
+        <div class="container" id="participant_container">
+
+            <!--Form participant-->
+            <form class="form-horizontal" id="participant_form">
+                <fieldset>
+
+                    <!-- Form Name -->
+                    <div>
+                        <legend><span>Participante</span></legend>
+                    </div>
+                    <div class="field-container">
+                        <!-- Text input-->
+                        <div class="control-group">
+                            <label class="control-label" for="identification">Identificación</label>
+                            <div class="controls">
+                                <input id="identification" name="identification" placeholder="Número de Cedula" class="input-xlarge" type="text" autocomplete="off" pattern="[0-9]*">
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="control-group">
+                            <label class="control-label" for="name">Nombre</label>
+                            <div class="controls">
+                                <input id="name" name="name" placeholder="Nombre Completo" class="input-xlarge" type="text" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="control-group">
+                            <label class="control-label" for="email">Em@il</label>
+                            <div class="controls">
+                                <input id="email" name="email" placeholder="Correo Electronico" class="input-xlarge" type="email" autocomplete="off">
+                            </div>
+                        </div>
+
+                        <!-- Button (Double) -->
+                        <div class="control-group">
+                            <label class="control-label" for="cancel"></label>
+                            <div class="controls">
+                                <button id="continue" name="continue" class="btn btn-primary">Continuar</button>
+                                <input type="button" id="cancel" name="cancel" class="btn " value="Cancelar" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                </fieldset>
+            </form>
+
+            <!--Form preguntas-->
+            <form class="form-horizontal" id="question_form" style="display: none">
+                <fieldset>
+
+                    <!-- Form Name -->
+                    <div id="question_container">
+                    </div>
+                    <!-- Button (Double) -->
+                    <div class="control-group">
+                        <div class="control-container">
+                            <button id="btnsi" name="btnsi" class="btn btn-success">Si</button>
+                            <button id="btnno" name="btnno" class="btn btn-danger">No</button>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="control-container timer">
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+
+            <!--Result-->
+            <div id="result_view" style="display: none">
+                <fieldset>
+                    <div>
+                        <legend><span>Resultado</span></legend>
+                    </div>
+                    <div class="field-container">
+
+
+                        <div id="result_container">
+                        </div>
+
+                        <div class="control-group">
+                            <div class="control-container">
+                                <button id="restart" name="restart" class="btn btn-success">Continuar</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <div class="container" style="display: none" id="report_conainer">
+            <!--Report-->
+            <div id="report_view">
+            </div>
+        </div>
+    </div>
+</body>
+<script src="assets/js/jquery-1.9.1.min.js"></script>
+<script src="assets/js/underscore-min.js"></script>
+<script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="assets/js/jquery.validate.js"></script>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/utils.js"></script>
+
+<script src="controller/qa.js"></script>
+<script src="model/answer.js"></script>
+<script src="model/participant.js"></script>
+
+<script type="text/html" id="question_template">
+    <div><legend><span>Pregunta {%= question.Number %}</span></legend></div>
+    <div class="field-container">
+        <!-- Text input-->
+        <div class="control-group">
+            <div class="">
+                <h2><span>{%= question.Description %}</span></h2>
+                <p class="help-block">Debes responder Si o No</p>
+                <input type="hidden" id="qid" value="{%= question.QuestionId %}" />
+
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="result_template">
+    {% _.each(answers, function(answer){ %}
+        <div class="control-group">
+            <div class="control-container">
+
+                <h4><small>Pregunta {%= answer.Number %}: </small>{%= answer.Description %}</h4>
+
+                <div class="controls">
+                    {% if(answer.IsCorrect) { %}
+                    <img src="assets/images/Check.png" />
+                    {% } else { %}
+                    <img src="assets/images/Delete.png" />
+                    {% } %}
+                        
+                </div>
+            </div>
+        </div>
+    {% }); %}
+        
+</script>
+
+<script type="text/html" id="report_templaten">
+    {% var cont = 0; %}
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>#</th>
+                <th>Identificación</th>
+                <th>Nombre</th>
+                <th>Em@il</th>
+                <th>Aciertos</th>
+            </tr>
+            {% _.each(participants, function(participant){ %}
+            {% cont += 1; %}
+            <tr>
+                <td>{%= cont %}</td>
+                <td>{%= participant.Identification %}</td>
+                <td>{%= participant.Name %}</td>
+                <td>{%= participant.Email %}</td>
+                <td>{%= participant.Corrects %}</td>
+            </tr>
+            {% }); %}
+                
+        </table>
+</script>
+</html>
